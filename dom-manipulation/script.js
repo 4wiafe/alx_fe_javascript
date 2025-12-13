@@ -29,11 +29,13 @@ const quoteDisplay = document.getElementById("quoteDisplay");
 const showQuoteBtn = document.getElementById("newQuote");
 const newQuoteText = document.getElementById("newQuoteText");
 const newQuoteCategory = document.getElementById("newQuoteCategory");
+const exportQuotes = document.getElementById("export");
 const KEY = "quote";
 
 loadQuote();
 
 showQuoteBtn.addEventListener("click", showRandomQuote);
+exportQuotes.addEventListener("click", exportData);
 
 function showRandomQuote() {
   quoteDisplay.innerHTML = "";
@@ -94,4 +96,17 @@ function loadQuote() {
     console.error("Failed to load quote", error.message);
     return null;
   }
+}
+
+function exportData() {
+  const quotesToJSON = JSON.stringify(quotes);
+  const blob = new Blob([quotesToJSON], { type: "text/json" });
+  const downloadLink = URL.createObjectURL(blob);
+  const linkElement = document.createElement("a");
+
+  linkElement.href = downloadLink;
+  linkElement.download = quotesToJSON;
+  linkElement.click();
+  
+  URL.revokeObjectURL(blob);
 }
