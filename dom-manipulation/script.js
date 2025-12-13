@@ -24,3 +24,22 @@ const quotes = [
     category: "Philosophy",
   }
 ];
+
+const quoteDisplay = document.getElementById("quoteDisplay");
+const showQuoteBtn = document.getElementById("newQuote");
+
+showQuoteBtn.addEventListener("click", showRandomQuote);
+
+function showRandomQuote() {
+  quoteDisplay.innerHTML = "";
+
+  const random = Math.floor(Math.random() * quotes.length);
+
+  const text = quotes[random].text;
+  const category = quotes[random].category;
+  
+  const randomQuote = document.createElement("p");
+  randomQuote.textContent = `${category}: ${text}`;
+
+  quoteDisplay.appendChild(randomQuote);
+}
