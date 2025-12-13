@@ -27,6 +27,8 @@ const quotes = [
 
 const quoteDisplay = document.getElementById("quoteDisplay");
 const showQuoteBtn = document.getElementById("newQuote");
+const newQuoteText = document.getElementById("newQuoteText");
+const newQuoteCategory = document.getElementById("newQuoteCategory");
 
 showQuoteBtn.addEventListener("click", showRandomQuote);
 
@@ -42,4 +44,28 @@ function showRandomQuote() {
   randomQuote.textContent = `${category}: ${text}`;
 
   quoteDisplay.appendChild(randomQuote);
+}
+
+function createAddQuoteForm() {
+  quoteDisplay.innerHTML = "";
+
+  const quoteValue = newQuoteText.value.trim();
+  const categoryValue = newQuoteCategory.value.trim();
+
+  quotes.push({
+    text: quoteValue,
+    category: categoryValue
+  });
+
+  newQuoteText.value = "";
+  newQuoteCategory.value = "";
+
+  const randomQuote = document.createElement("p");
+  randomQuote.textContent = `${categoryValue}: ${quoteValue}`;
+
+  quoteDisplay.appendChild(randomQuote);
+}
+
+function addQuote() {
+  createAddQuoteForm();
 }
