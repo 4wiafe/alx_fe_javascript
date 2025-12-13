@@ -29,6 +29,9 @@ const quoteDisplay = document.getElementById("quoteDisplay");
 const showQuoteBtn = document.getElementById("newQuote");
 const newQuoteText = document.getElementById("newQuoteText");
 const newQuoteCategory = document.getElementById("newQuoteCategory");
+const KEY = "quote";
+
+loadQuote();
 
 showQuoteBtn.addEventListener("click", showRandomQuote);
 
@@ -57,6 +60,11 @@ function createAddQuoteForm() {
     category: categoryValue
   });
 
+  saveQuote({
+    text: quoteValue,
+    category: categoryValue
+  });
+
   newQuoteText.value = "";
   newQuoteCategory.value = "";
 
@@ -68,4 +76,22 @@ function createAddQuoteForm() {
 
 function addQuote() {
   createAddQuoteForm();
+}
+
+function saveQuote(quoteObject) {
+  try {
+    return localStorage.setItem(KEY, JSON.stringify(quoteObject));
+  } catch (error) {
+    console.error("Failed to save quote.", error.message);
+    return false;
+  }
+}
+
+function loadQuote() {
+  try {
+    return JSON.parse(localStorage.getItem(KEY));
+  } catch (error) {
+    console.error("Failed to load quote", error.message);
+    return null;
+  }
 }
