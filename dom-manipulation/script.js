@@ -100,13 +100,13 @@ function loadQuote() {
 
 function exportData() {
   const quotesToJSON = JSON.stringify(quotes);
-  const blob = new Blob([quotesToJSON], { type: "text/json" });
+  const blob = new Blob([quotesToJSON], { type: "application/json" });
   const downloadLink = URL.createObjectURL(blob);
   const linkElement = document.createElement("a");
 
   linkElement.href = downloadLink;
   linkElement.download = quotesToJSON;
   linkElement.click();
-  
+
   URL.revokeObjectURL(blob);
 }
