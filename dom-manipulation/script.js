@@ -288,6 +288,23 @@ async function fetchQuotesFromServer() {
      return [];
    }
 }
+
+async function sendQuotesToServer(quotes) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(quotes)
+    });
+
+    const result = await response.json();
+    console.log("Server response:", result);
+  } catch (error) {
+    console.error("Failed to send quotes to server", error.message); 
+  }
+}
  
 async function syncWithServer() {
   try {
@@ -311,6 +328,9 @@ async function syncWithServer() {
     });
 
     localStorage.setItem(KEY, JSON.stringify(quotes));
+
+    await sendQuotesToServer(quotes);
+
     alert("Quotes synced with server");
 
   } catch (error) {
