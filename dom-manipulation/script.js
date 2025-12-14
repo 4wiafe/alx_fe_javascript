@@ -22,6 +22,10 @@ let quotes = [
   {
     text: "Knowing yourself is the beginning of all wisdom.",
     category: "Philosophy",
+  },
+  {
+    text: "Consistency turns dreams into habits.",
+    category: "Motivation"
   }
 ];
 
@@ -156,6 +160,104 @@ function populateCategories() {
     
     categoryFilter.append(option);
   });
+}
+
+function filterQuotes() {
+  quoteDisplay.innerHTML = "";
+
+  if (categoryFilter.value === "all") { 
+    showRandomQuote();
+  }
+  
+    if (categoryFilter.value === "motivation") {
+      const motivationQuotes = quotes.filter(
+        (quote) => quote.category === "Motivation"
+      );
+
+      const random = Math.floor(Math.random() * motivationQuotes.length);
+      const text = motivationQuotes[random].text;
+      const category = motivationQuotes[random].category;
+
+      const p = document.createElement("p");
+      p.textContent = `${category}: ${text}`;
+
+      quoteDisplay.appendChild(p);
+    }
+
+  if (categoryFilter.value === "programming") {
+    const programmingQuotes = quotes.filter(
+      (quote) => quote.category === "Programming"
+    );
+
+    const random = Math.floor(Math.random() * programmingQuotes.length);
+    const text = programmingQuotes[random].text;
+    const category = programmingQuotes[random].category;
+
+    const p = document.createElement("p");
+    p.textContent = `${category}: ${text}`;
+
+    quoteDisplay.appendChild(p);
+  }
+
+  if (categoryFilter.value === "success") {
+    const successQuotes = quotes.filter(
+      (quote) => quote.category === "Success"
+    );
+
+    const random = Math.floor(Math.random() * successQuotes.length);
+    const text = successQuotes[random].text;
+    const category = successQuotes[random].category;
+
+    const p = document.createElement("p");
+    p.textContent = `${category}: ${text}`;
+
+    quoteDisplay.appendChild(p);
+  }
+
+  if (categoryFilter.value === "discipline") {
+    const disciplineQuotes = quotes.filter(
+      (quote) => quote.category === "Discipline"
+    );
+
+    const random = Math.floor(Math.random() * disciplineQuotes.length);
+    const text = disciplineQuotes[random].text;
+    const category = disciplineQuotes[random].category;
+
+    const p = document.createElement("p");
+    p.textContent = `${category}: ${text}`;
+
+    quoteDisplay.appendChild(p);
+  }
+
+  if (categoryFilter.value === "life") {
+    const lifeQuotes = quotes.filter(
+      (quote) => quote.category === "Life"
+    );
+
+    const random = Math.floor(Math.random() * lifeQuotes.length);
+    const text = lifeQuotes[random].text;
+    const category = lifeQuotes[random].category;
+
+    const p = document.createElement("p");
+    p.textContent = `${category}: ${text}`;
+
+    quoteDisplay.appendChild(p);
+  }
+
+  if (categoryFilter.value === "philosophy") {
+    const philosophyQuotes = quotes.filter(
+      (quote) => quote.category === "Philosophy"
+    );
+
+    const random = Math.floor(Math.random() * philosophyQuotes.length);
+    const text = philosophyQuotes[random].text;
+    const category = philosophyQuotes[random].category;
+
+    const p = document.createElement("p");
+    p.textContent = `${category}: ${text}`;
+
+    quoteDisplay.appendChild(p);
+  }
 }
 
 populateCategories();
