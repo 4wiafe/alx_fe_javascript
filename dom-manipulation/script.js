@@ -274,4 +274,20 @@ function filterQuotes() {
   }
 }
 
+async function fetchQuotesFromServer() {
+   try {
+     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+     const data = await response.json();
+     
+     return data.slice(0, 10).map((post) => ({
+       text: post.title,
+       category: `User ${post.userId}`,
+     }));
+   } catch (error) {
+     console.error("Failed to fetch server quotes.", error.message);
+     return [];
+   }
+ }
+
 populateCategories();
+fetchQuotesFromServer();
