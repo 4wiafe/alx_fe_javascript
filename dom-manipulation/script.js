@@ -30,6 +30,8 @@ const showQuoteBtn = document.getElementById("newQuote");
 const newQuoteText = document.getElementById("newQuoteText");
 const newQuoteCategory = document.getElementById("newQuoteCategory");
 const exportQuotes = document.getElementById("exportFile");
+const categoryFilter = document.getElementById("categoryFilter");
+
 const KEY = "quote";
 
 loadQuote();
@@ -141,3 +143,21 @@ function importFromJsonFile(event) {
 
   fileReder.readAsText(file);
 }
+
+function populateCategories() {
+  const categories = [];
+
+  quotes.forEach(quote => categories.push(quote.category));
+
+  const uniqueCategories = [...new Set(categories)];
+
+  uniqueCategories.forEach(category => {
+    const option = document.createElement("option");
+    option.value = category.toLowerCase();
+    option.textContent = category;
+    
+    categoryFilter.append(option);
+  });
+}
+
+populateCategories();
