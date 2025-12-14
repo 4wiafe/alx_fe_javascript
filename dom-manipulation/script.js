@@ -55,6 +55,8 @@ function showRandomQuote() {
   randomQuote.textContent = `${category}: ${text}`;
 
   quoteDisplay.appendChild(randomQuote);
+
+  saveQuote();
 }
 
 function createAddQuoteForm() {
@@ -165,11 +167,13 @@ function populateCategories() {
 function filterQuotes() {
   quoteDisplay.innerHTML = "";
 
-  if (categoryFilter.value === "all") { 
+  let selectedCategory = categoryFilter.value;
+
+  if (selectedCategory === "all") {
     showRandomQuote();
   }
   
-    if (categoryFilter.value === "motivation") {
+    if (selectedCategory === "motivation") {
       const motivationQuotes = quotes.filter(
         (quote) => quote.category === "Motivation"
       );
@@ -182,9 +186,11 @@ function filterQuotes() {
       p.textContent = `${category}: ${text}`;
 
       quoteDisplay.appendChild(p);
+
+      saveQuote();
     }
 
-  if (categoryFilter.value === "programming") {
+  if (selectedCategory === "programming") {
     const programmingQuotes = quotes.filter(
       (quote) => quote.category === "Programming"
     );
@@ -197,9 +203,11 @@ function filterQuotes() {
     p.textContent = `${category}: ${text}`;
 
     quoteDisplay.appendChild(p);
+
+    saveQuote();
   }
 
-  if (categoryFilter.value === "success") {
+  if (selectedCategory === "success") {
     const successQuotes = quotes.filter(
       (quote) => quote.category === "Success"
     );
@@ -212,9 +220,11 @@ function filterQuotes() {
     p.textContent = `${category}: ${text}`;
 
     quoteDisplay.appendChild(p);
+
+    saveQuote();
   }
 
-  if (categoryFilter.value === "discipline") {
+  if (selectedCategory === "discipline") {
     const disciplineQuotes = quotes.filter(
       (quote) => quote.category === "Discipline"
     );
@@ -227,12 +237,12 @@ function filterQuotes() {
     p.textContent = `${category}: ${text}`;
 
     quoteDisplay.appendChild(p);
+
+    saveQuote();
   }
 
-  if (categoryFilter.value === "life") {
-    const lifeQuotes = quotes.filter(
-      (quote) => quote.category === "Life"
-    );
+  if (selectedCategory === "life") {
+    const lifeQuotes = quotes.filter((quote) => quote.category === "Life");
 
     const random = Math.floor(Math.random() * lifeQuotes.length);
     const text = lifeQuotes[random].text;
@@ -242,9 +252,11 @@ function filterQuotes() {
     p.textContent = `${category}: ${text}`;
 
     quoteDisplay.appendChild(p);
+
+    saveQuote();
   }
 
-  if (categoryFilter.value === "philosophy") {
+  if (selectedCategory === "philosophy") {
     const philosophyQuotes = quotes.filter(
       (quote) => quote.category === "Philosophy"
     );
@@ -257,6 +269,8 @@ function filterQuotes() {
     p.textContent = `${category}: ${text}`;
 
     quoteDisplay.appendChild(p);
+
+    saveQuote();
   }
 }
 
