@@ -306,7 +306,7 @@ async function sendQuotesToServer(quotes) {
   }
 }
  
-async function syncWithServer() {
+async function syncQuotes() {
   try {
     const serverQuotes = await fetchQuotesFromServer();
 
@@ -314,10 +314,10 @@ async function syncWithServer() {
       throw new Error("Invalid server data.");
     }
 
-    serverQuotes.forEach(serverQuote => {
-      const localIndex = quotes.findIndex(localQuote => {
+    serverQuotes.forEach((serverQuote) => {
+      const localIndex = quotes.findIndex((localQuote) => {
         localQuote.text === serverQuote.text &&
-        localQuote.category === serverQuote.category;
+          localQuote.category === serverQuote.category;
       });
 
       if (localIndex === -1) {
@@ -332,7 +332,7 @@ async function syncWithServer() {
     await sendQuotesToServer(quotes);
 
     alert("Quotes synced with server");
-
+    
   } catch (error) {
     console.error("Sync failed:", error);
     alert("Failed to sync with server. Please try again later.");
@@ -341,4 +341,4 @@ async function syncWithServer() {
 
 populateCategories();
 fetchQuotesFromServer();
-syncWithServer();
+syncQuotes();
