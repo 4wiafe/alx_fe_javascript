@@ -29,7 +29,7 @@ const quoteDisplay = document.getElementById("quoteDisplay");
 const showQuoteBtn = document.getElementById("newQuote");
 const newQuoteText = document.getElementById("newQuoteText");
 const newQuoteCategory = document.getElementById("newQuoteCategory");
-const exportQuotes = document.getElementById("export");
+const exportQuotes = document.getElementById("exportFile");
 const KEY = "quote";
 
 loadQuote();
@@ -54,35 +54,29 @@ function showRandomQuote() {
 function createAddQuoteForm() {
   quoteDisplay.innerHTML = "";
 
-  const quoteValue = newQuoteText.value.trim();
-  const categoryValue = newQuoteCategory.value.trim();
+  const text = newQuoteText.value.trim();
+  const quote = newQuoteCategory.value.trim();
 
-  quotes.push({
-    text: quoteValue,
-    category: categoryValue
-  });
+  if (!text || !quote) return;
 
-  saveQuote({
-    text: quoteValue,
-    category: categoryValue
-  });
+  quotes.push({text, category});
+
+  saveQuote();
 
   newQuoteText.value = "";
   newQuoteCategory.value = "";
 
-  const randomQuote = document.createElement("p");
-  randomQuote.textContent = `${categoryValue}: ${quoteValue}`;
-
-  quoteDisplay.appendChild(randomQuote);
+  showRandomQuote();
 }
 
 function addQuote() {
   createAddQuoteForm();
 }
 
-function saveQuote(quoteObject) {
+function saveQuote() {
   try {
-    return localStorage.setItem(KEY, JSON.stringify(quoteObject));
+    localStorage.setItem(KEY, JSON.stringify(quotes));
+    return true;
   } catch (error) {
     console.error("Failed to save quote.", error.message);
     return false;
@@ -90,22 +84,27 @@ function saveQuote(quoteObject) {
 }
 
 function loadQuote() {
-  try {
-    return JSON.parse(localStorage.getItem(KEY));
-  } catch (error) {
-    console.error("Failed to load quote", error.message);
-    return null;
+  const storedQuotes = localStorage.getItem(KEY);
+
+  if (storedQuotes) {
+    try {
+      quotes = JSON.parse(storedQuotes);
+      return true;
+     } catch (error) {
+       console.error("Failed to load quote", error.message);
+       return false;
+     }
   }
 }
 
 function exportData() {
-  const quotesToJSON = JSON.stringify(quotes);
+  const quotesToJSON = JSON.stringify(quotes, null, 2);
   const blob = new Blob([quotesToJSON], { type: "application/json" });
   const downloadLink = URL.createObjectURL(blob);
   const linkElement = document.createElement("a");
 
   linkElement.href = downloadLink;
-  linkElement.download = quotesToJSON;
+  linkElement.download = "quotes.json";
   linkElement.click();
 
   URL.revokeObjectURL(blob);
