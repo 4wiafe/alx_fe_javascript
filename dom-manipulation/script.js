@@ -332,12 +332,14 @@ async function syncQuotes() {
     await sendQuotesToServer(quotes);
 
     alert("Quotes synced with server");
-    
+
   } catch (error) {
     console.error("Sync failed:", error);
     alert("Failed to sync with server. Please try again later.");
   }
 }
+
+setInterval(syncQuotes, 30000);
 
 populateCategories();
 fetchQuotesFromServer();
