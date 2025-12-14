@@ -287,7 +287,38 @@ async function fetchQuotesFromServer() {
      console.error("Failed to fetch server quotes.", error.message);
      return [];
    }
- }
+}
+ 
+async function syncWithServer() {
+  try {
+    const serverQuotes = await fetchQuotesFromServer();
+
+    if (!Array.isArray(serverQuotes)) {
+      throw new Error("Invalid server data.");
+    }
+
+    serverQuotes.forEach(serverQuote => {
+      const localIndex = quotes.findIndex(localQuote => {
+        localQuote.text === serverQuote.text &&
+        localQuote.category === serverQuote.category;
+      });
+
+      if (localIndex === -1) {
+        quotes.push(serverQuote);
+      } else {
+        quotes[localIndex] = serverQuote;
+      }
+    });
+
+    localStorage.setItem(KEY, JSON.stringify(quotes));
+    alert("Quotes synced with server");
+
+  } catch (error) {
+    console.error("Sync failed:", error);
+    alert("Failed to sync with server. Please try again later.");
+  }
+}
 
 populateCategories();
 fetchQuotesFromServer();
+syncWithServer();
