@@ -145,9 +145,7 @@ function importFromJsonFile(event) {
 }
 
 function populateCategories() {
-  const categories = [];
-
-  quotes.forEach(quote => categories.push(quote.category));
+  const categories = quotes.map(quote => quote.category);
 
   const uniqueCategories = [...new Set(categories)];
 
