@@ -1,4 +1,4 @@
-const quotes = [
+let quotes = [
   {
     text: "Small progress is still progress.",
     category: "Motivation",
@@ -59,7 +59,7 @@ function createAddQuoteForm() {
 
   if (!text || !quote) return;
 
-  quotes.push({text, category});
+  quotes.push({text, quote});
 
   saveQuote();
 
@@ -108,4 +108,36 @@ function exportData() {
   linkElement.click();
 
   URL.revokeObjectURL(blob);
+}
+
+function importFromJsonFile(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const fileReder = new FileReader();
+
+  fileReder.onload = function () {
+    try {
+      const importedQuotes = JSON.parse(fileReder.result);
+
+      if (!Array.isArray(importedQuotes)) {
+        alert("Invalid file format.");
+        return;
+      }
+
+      importedQuotes.forEach((quote) => {
+        if (quote.text && quote.category) {
+          quotes.push(quote);
+        }
+      });
+
+      saveQuote();
+      alert("Quotes imported successfully");
+    } catch (error) {
+      
+    }
+  };
+
+  fileReder.readAsText(file);
 }
